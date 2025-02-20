@@ -175,3 +175,17 @@ async function payWithCrypto() {
         alert("Transaction Failed!");
     }
 }
+async function connectWallet() {
+    if (window.ethereum) {
+        try {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            alert("Wallet Connected: " + accounts[0]);
+            document.getElementById("wallet-status").innerText = "Connected: " + accounts[0];
+        } catch (error) {
+            console.error("User denied wallet connection", error);
+            alert("Wallet connection failed!");
+        }
+    } else {
+        alert("MetaMask not detected. Please install MetaMask.");
+    }
+}
