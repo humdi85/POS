@@ -39,3 +39,17 @@ async function processPayment() {
         alert("Transaction Failed!");
     }
 }
+async function checkTransactionStatus(txHash) {
+    try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const receipt = await provider.getTransactionReceipt(txHash);
+
+        if (receipt && receipt.status === 1) {
+            alert("Transaction Successful!");
+        } else {
+            alert("Transaction Failed!");
+        }
+    } catch (error) {
+        alert("Error fetching transaction status!");
+    }
+}
