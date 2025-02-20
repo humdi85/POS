@@ -109,3 +109,31 @@ function processPreAuth() {
         alert("Invalid Code! Please enter a 4 or 6 digit code.");
     }
 }
+function startApplePay() {
+    if (!window.ApplePaySession) {
+        alert("Apple Pay is not supported on this device.");
+        return;
+    }
+
+    const request = {
+        countryCode: "US", 
+        currencyCode: "USD",
+        supportedNetworks: ["visa", "mastercard", "amex"],
+        merchantCapabilities: ["supports3DS"],
+        total: { label: "Crypto POS", amount: "10.00" } 
+    };
+
+    const session = new ApplePaySession(3, request);
+
+    session.onvalidatemerchant = (event) => {
+        session.completeMerchantValidation({}); 
+    };
+
+    session.onpaymentauthorized = (event) => {
+        alert("Apple Pay Payment Successful!");
+        processPayment(); 
+        session.completePayment(ApplePaySession.STATUS_SUCCESS);
+    };
+
+    session.begin();
+}
