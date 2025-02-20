@@ -137,3 +137,41 @@ function startApplePay() {
 
     session.begin();
 }
+let userWallet = null;
+
+// ✅ Wallet Connect Function
+async function connectWallet() {
+    if (window.ethereum) {
+        try {
+            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+            userWallet = accounts[0];
+            document.getElementById("walletAddress").innerText = `Connected: ${userWallet}`;
+            document.getElementById("payCrypto").disabled = false;
+        } catch (error) {
+            alert("Wallet connection failed!");
+        }
+    } else {
+        alert("MetaMask or Web3 Wallet not detected!");
+    }
+}
+
+// ✅ Crypto Payment Function
+async function payWithCrypto() {
+    if (!userWallet) {
+        alert("Please connect your wallet first!");
+        return;
+    }
+
+    const transactionParameters = {
+        to: "YOUR_WALLET_ADDRESS", // Apni receiving wallet ka address yahan dalna!
+        from: userWallet,
+        value: "0x2386F26FC10000", // 0.01 ETH (Hex format me)
+    };
+
+    try {
+        await ethereum.request({ method: "eth_sendTransaction", params: [transactionParameters] });
+        alert("Crypto Payment Sent Successfully!");
+    } catch (error) {
+        alert("Transaction Failed!");
+    }
+}
