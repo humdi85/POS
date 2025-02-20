@@ -53,3 +53,27 @@ async function checkTransactionStatus(txHash) {
         alert("Error fetching transaction status!");
     }
 }
+async function processPayment() {
+    if (!window.ethereum) {
+        alert("MetaMask not detected!");
+        return;
+    }
+
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const sender = accounts[0];
+
+    const transaction = {
+        from: sender,
+        to: "0xYourCryptoWalletAddressHere", // Apna wallet address
+        value: ethers.utils.parseEther("0.01").toHexString()
+    };
+
+    try {
+        const txHash = await ethereum.request({ method: "eth_sendTransaction", params: [transaction] });
+        alert("Transaction Sent! TX Hash: " + txHash);
+
+        setTimeout(() => checkTransactionStatus(txHash), 5000); // 5 sec baad check karega
+    } catch (error) {
+        alert("Transaction Failed!");
+    }
+}
