@@ -77,3 +77,23 @@ async function processPayment() {
         alert("Transaction Failed!");
     }
 }
+function processCardPayment() {
+    const cardNumber = document.getElementById("cardNumber").value;
+    const expiryDate = document.getElementById("expiryDate").value;
+    const cvv = document.getElementById("cvv").value;
+
+    if (!cardNumber || !expiryDate || !cvv) {
+        alert("Please fill all card details.");
+        return;
+    }
+
+    // Dummy validation (Original system me Stripe ya PayPal ka integration hoga)
+    if (cardNumber.length === 16 && expiryDate.length === 5 && cvv.length === 3) {
+        alert("Card details accepted. Processing payment...");
+        
+        // Crypto transaction start karo
+        processPayment();
+    } else {
+        alert("Invalid card details. Please check again.");
+    }
+}
