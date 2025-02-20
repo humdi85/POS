@@ -189,3 +189,10 @@ async function connectWallet() {
         alert("MetaMask not detected. Please install MetaMask.");
     }
 }
+if (typeof window.ethereum !== "undefined") {
+    console.log("MetaMask detected!");
+    document.getElementById("status").innerText = "MetaMask Detected";
+} else {
+    console.log("MetaMask not detected!");
+    document.getElementById("status").innerText = "MetaMask Not Installed";
+}
