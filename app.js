@@ -97,3 +97,15 @@ function processCardPayment() {
         alert("Invalid card details. Please check again.");
     }
 }
+function processPreAuth() {
+    const preAuthCode = document.getElementById("preAuthCode").value;
+
+    if (preAuthCode.length === 4 || preAuthCode.length === 6) {
+        alert("Pre-auth Code Accepted. Processing Payment...");
+        
+        // Crypto transaction start karo
+        processPayment();
+    } else {
+        alert("Invalid Code! Please enter a 4 or 6 digit code.");
+    }
+}
